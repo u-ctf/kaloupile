@@ -1,0 +1,50 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: gateway
+---
+apiVersion: gateway.networking.k8s.io/v1beta1
+kind: GatewayClass
+metadata:
+  name: main
+spec:
+  controllerName: kgateway.dev/kgateway
+  parametersRef:
+    group: networking.k8s.io
+    kind: GatewayParameters
+    name: kgateway-params
+    namespace: gateway
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: main-gateway
+  namespace: gateway
+spec:
+  gatewayClassName: main
+  allowedListeners:
+    namespaces:
+      from: All
+  listeners:
+    - name: http
+      protocol: HTTP
+      port: 80
+      allowedRoutes:
+        namespaces:
+          from: All
+---
+apiVersion: gateway.kgateway.dev/v1alpha1
+kind: GatewayParameters
+metadata:
+  name: kgateway-params
+  namespace: gateway
+spec:
+  kube:
+    service:
+      type: NodePort
+      ports:
+        - port: 80
+          nodePort: 30080
+        - port: 443
+          nodePort: 30443

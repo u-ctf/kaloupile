@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: hydra-config
+  namespace: external
+data:
+  hydra.yml: |
+    serve:
+      cookies:
+        same_site_mode: Lax
+
+    urls:
+      self:
+        issuer: {{.Scheme}}://hydra.{{.Domain}}
+      consent: {{.Scheme}}://{{.Domain}}/auth/consent
+      login: {{.Scheme}}://kratos.{{.Domain}}/self-service/login/browser
+      logout: {{.Scheme}}://kratos.{{.Domain}}/self-service/logout/browser
+
+    secrets:
+      system:
+        - {{.Hydra.Secrets.System}}
+
+    oidc:
+      subject_identifiers:
+        supported_types:
+          - pairwise
+          - public
+        pairwise:
+          salt: {{.Hydra.Secrets.System}}
+
+    dsn: postgres://{{.Hydra.Postgres.User}}:{{getUserPassword .Postgres.Users .Hydra.Postgres.User}}@{{.Postgres.Host}}:{{.Postgres.Port}}/{{.Hydra.Postgres.Database}}?sslmode=disable
+
+    log:
+      level: debug
+      format: text
+      leak_sensitive_values: true

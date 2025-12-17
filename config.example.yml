@@ -1,0 +1,48 @@
+# Domain settings
+scheme: "http"
+domain: "tristan.dev.uctf.io"
+
+# PostgreSQL settings
+postgres:
+  host: "postgresql.external.svc.cluster.local"
+  port: 5432
+  # admin cannot be changed after initial setup
+  admin:
+    user: "postgres"
+    password: "postgres-admin-password" 
+    database: "postgres"
+  users:
+    - name: "ory"
+      password: "ory-dev-password"
+      databases:
+        - "kratos_db"
+        - "hydra_db"
+
+# Kratos settings
+kratos:
+  public_port: 4433
+  admin_port: 4434
+  postgres:
+    user: "ory"
+    database: "kratos_db"
+  # not really necessary for dev, but kept for consistency
+  github:
+    client_id: ""
+    client_secret: ""
+  secrets:
+    cookie: "dev-cookie-secret-min-16-chars!!"
+    cipher: "dev-cipher-secret-32-chars-long!"
+  webhook:
+    # IP for the webhook (unused yet)
+    local_ip: "127.0.0.1"
+    port: 8080
+
+# Hydra settings
+hydra:
+  public_port: 4444
+  admin_port: 4445
+  postgres:
+    user: "ory"
+    database: "hydra_db"
+  secrets:
+    system: "dev-hydra-system-secret-change!"

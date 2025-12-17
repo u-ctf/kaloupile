@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: kaloupile
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: external
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: app
