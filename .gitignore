@@ -36,6 +36,3 @@ tilt_modules/
 
 # Build artifacts
 dist/
-
-# Config
-config.yml

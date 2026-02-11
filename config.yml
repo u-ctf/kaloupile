@@ -1,0 +1,19 @@
+# Domain settings
+scheme: "http"
+domain: "tristan.dev.uctf.io"
+
+# PostgreSQL settings
+postgres:
+  localHost: "localhost"
+  localPort: 5432
+  host: "postgresql.external.svc.cluster.local"
+  port: 5432
+  admin:
+    user: "postgres"
+    password: "postgres-admin-password" 
+    database: "postgres"
+  users:
+    - name: "basilic"
+      password: "basilic"
+      databases:
+        - "basilic"

@@ -1,0 +1,3 @@
+resources:
+- namespaces/namespaces.yaml
+- gateway/gateway.yaml
