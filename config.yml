@@ -17,3 +17,8 @@ postgres:
       password: "basilic"
       databases:
         - "basilic"
+
+# Services settings
+services:
+  - name: "basilic"
+    path: ../basilic
