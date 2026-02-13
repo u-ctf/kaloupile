@@ -35,3 +35,21 @@ This CLI is a small dev helper meant to be used alongside a Tiltfile. It focuses
 - `kubectl` and `kind` must be available in PATH.
 - The CLI assumes an `external` namespace for dependencies.
 - The setup marker is not removed by `cleanup`.
+
+---
+
+# Memories
+
+This section stores key architectural decisions, patterns, and lessons learned. Future AI agents should review these memories before making changes to avoid repeating past mistakes or deviating from established conventions.
+
+## Architectural Decisions
+
+*No entries yet. Add decisions here as they are made.*
+
+## Patterns & Conventions
+
+*No entries yet. Document recurring patterns here.*
+
+## Lessons Learned / Mistakes to Avoid
+
+*No entries yet. Record pitfalls and their solutions here.*
