@@ -3,13 +3,19 @@ package config
 import (
 	"fmt"
 	"os"
+	"strings"
 
 	"gopkg.in/yaml.v3"
 )
 
 type Config struct {
-	Scheme   string `yaml:"scheme"`
-	Domain   string `yaml:"domain"`
+	Scheme string `yaml:"scheme"`
+	Domain string `yaml:"domain"`
+	DNS    struct {
+		Infomaniak struct {
+			Token string `yaml:"token"`
+		} `yaml:"infomaniak"`
+	} `yaml:"dns"`
 	Postgres struct {
 		LocalHost string `yaml:"localHost"`
 		LocalPort int    `yaml:"localPort"`
@@ -44,4 +50,16 @@ func LoadFromFile(path string) (*Config, error) {
 	}
 
 	return &cfg, nil
+}
+
+func ValidateDependencies(cfg *Config) error {
+	if cfg == nil {
+		return fmt.Errorf("config is nil")
+	}
+
+	if strings.TrimSpace(cfg.DNS.Infomaniak.Token) == "" {
+		return fmt.Errorf("missing required config: dns.infomaniak.token")
+	}
+
+	return nil
 }

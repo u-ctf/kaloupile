@@ -66,7 +66,16 @@ func newDependenciesCommand(configPath *string) *cobra.Command {
 			if err != nil {
 				return err
 			}
+			if err := config.ValidateDependencies(cfg); err != nil {
+				return err
+			}
 			logDone("load config")
+
+			if err := runStep("install cert-manager dependencies", func() error {
+				return dependencies.InstallCertManagerDependencies(cfg)
+			}); err != nil {
+				return err
+			}
 
 			if err := runStep("install postgresql", func() error {
 				return dependencies.InstallPostgreSQL(cfg)

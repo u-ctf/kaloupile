@@ -6,11 +6,14 @@ This CLI is a small dev helper meant to be used alongside a Tiltfile. It focuses
 
 - `setup`
   - Runs the prerequisites script and ensures a Kind cluster named `kaloupile-dev` exists.
+  - Installs cert-manager from the upstream release manifest.
+  - Installs the Infomaniak cert-manager webhook from the upstream release manifest.
   - Idempotent: once it runs, it writes a marker file at `.kaloupile/setup.done` and exits early on subsequent runs.
   - Uses `cluster/prerequisites/install-prerequisites.sh`.
 
 - `dependencies`
   - Loads `config.yml` and installs dependencies.
+  - Applies Infomaniak API credentials secret into `cert-manager` namespace.
   - Applies the PostgreSQL manifest template at `cluster/dependencies/postgresql/postgresql.yaml`.
   - Applies the Fake SMTP manifest at `cluster/dependencies/fake-smtp/fake-smtp.yaml`.
 

@@ -2,6 +2,11 @@
 scheme: "http"
 domain: "tristan.dev.uctf.io"
 
+# DNS settings
+dns:
+  infomaniak:
+    token: "An6QaR9jfCsSkcBg-jbAYzI3zV4XZRxk-1r-ZeE4fawpb0BCHWRjpPCzGami-6LweSK6p5XkEXJUiFPF"
+
 # PostgreSQL settings
 postgres:
   localHost: "localhost"

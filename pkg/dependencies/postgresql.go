@@ -3,6 +3,7 @@ package dependencies
 import (
 	"bytes"
 	"crypto/sha256"
+	"encoding/base64"
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
@@ -88,7 +89,11 @@ func renderTemplate(path string, data any) ([]byte, error) {
 		return nil, fmt.Errorf("read template %s: %w", absPath, err)
 	}
 
-	tmpl, err := template.New(filepath.Base(absPath)).Option("missingkey=error").Parse(string(content))
+	tmpl, err := template.New(filepath.Base(absPath)).Funcs(template.FuncMap{
+		"b64enc": func(input string) string {
+			return base64.StdEncoding.EncodeToString([]byte(input))
+		},
+	}).Option("missingkey=error").Parse(string(content))
 	if err != nil {
 		return nil, fmt.Errorf("parse template %s: %w", absPath, err)
 	}

@@ -27,5 +27,13 @@ kubectl apply --server-side -f https://github.com/kubernetes-sigs/gateway-api/re
 
 echo "✅ Gateway API CRDs installed"
 
+echo "📦 Installing cert-manager..."
+kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.19.2/cert-manager.yaml
+echo "✅ cert-manager installed"
+
+echo "📦 Installing Infomaniak cert-manager webhook..."
+kubectl apply -f https://github.com/infomaniak/cert-manager-webhook-infomaniak/releases/download/v0.2.0/rendered-manifest.yaml
+echo "✅ Infomaniak cert-manager webhook installed"
+
 # Install kustomization
 kubectl apply -k "$SCRIPT_DIR/"

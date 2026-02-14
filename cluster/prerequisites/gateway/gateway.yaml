@@ -33,6 +33,19 @@ spec:
       allowedRoutes:
         namespaces:
           from: All
+    - name: https
+      protocol: HTTPS
+      port: 443
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - kind: Secret
+            group: ""
+            name: main-tls-secret
+            namespace: gateway
+      allowedRoutes:
+        namespaces:
+          from: All
 ---
 apiVersion: gateway.kgateway.dev/v1alpha1
 kind: GatewayParameters
