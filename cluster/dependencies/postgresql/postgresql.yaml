@@ -31,6 +31,38 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  name: pgweb
+  namespace: external
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pgweb
+  template:
+    metadata:
+      labels:
+        app: pgweb
+    spec:
+      containers:
+        - name: pgweb
+          image: sosedoff/pgweb:latest
+          imagePullPolicy: IfNotPresent
+          args:
+            - "--bind=0.0.0.0"
+            - "--listen=8081"
+            - "--url=postgres://{{ .Postgres.Admin.User }}:{{ .Postgres.Admin.Password }}@postgresql-nodeport.external.svc.cluster.local:5432/{{ .Postgres.Admin.Database }}?sslmode=disable"
+          ports:
+            - containerPort: 8081
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8081
+            initialDelaySeconds: 5
+            periodSeconds: 10
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
   name: postgresql
   namespace: external
   labels:
@@ -102,3 +134,18 @@ spec:
       nodePort: 30432
   selector:
     app: postgresql
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pgweb
+  namespace: external
+  labels:
+    app: pgweb
+spec:
+  ports:
+    - port: 8081
+      name: http
+      targetPort: 8081
+  selector:
+    app: pgweb
