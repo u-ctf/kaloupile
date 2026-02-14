@@ -27,3 +27,5 @@ postgres:
 services:
   - name: "basilic"
     path: ../basilic
+  - name: "fenouil"
+    path: ../fenouil
