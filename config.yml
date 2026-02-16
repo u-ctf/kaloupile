@@ -29,3 +29,5 @@ services:
     path: ../basilic
   - name: "fenouil"
     path: ../fenouil
+  - name: "thym"
+    path: ../thym
