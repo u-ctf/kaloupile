@@ -31,3 +31,6 @@ services:
     path: ../fenouil
   - name: "thym"
     path: ../thym
+
+stripe:
+  apiKey: "sk_test_51RzO58LMdlf9Qh060bMUBgmJbR9VLiyuF81pmkHhf9esNH5H8n6TgfKDX8YkKkAxHYo0AzSdLjxsvNJaLbfoOLfb00dWQ8CSRp"
