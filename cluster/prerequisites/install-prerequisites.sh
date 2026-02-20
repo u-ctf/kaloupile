@@ -37,3 +37,30 @@ echo "✅ Infomaniak cert-manager webhook installed"
 
 # Install kustomization
 kubectl apply -k "$SCRIPT_DIR/"
+
+echo "📦 Installing SeaweedFS S3"
+helm repo add seaweedfs https://seaweedfs.github.io/seaweedfs/helm
+helm upgrade --install seaweedfs seaweedfs/seaweedfs \
+  --namespace seaweedfs \
+  --create-namespace \
+  --set master.replicaCount=1 \
+  --set volume.replicaCount=1 \
+  --set filer.replicaCount=1 \
+  --set filer.s3.enabled=true \
+  --set filer.s3.enableAuth=true \
+  --set filer.s3.existingConfigSecret=s3-config \
+  --set filer.s3.createBuckets[0].name=dev \
+  --set filer.s3.createBuckets[0].anonymousRead=true
+#   --set s3.enabled=true \
+#   --set s3.createBuckets[0].name=dev \
+#   --set s3.createBuckets[0].anonymousRead=true \
+#   --set s3.existingConfigSecret=s3-config \
+  
+echo "✅ SeaweedFS S3 installed"
+
+echo "📦 Installing AWS Mountpoint S3 CSI Driver"
+helm repo add aws-mountpoint-s3-csi-driver https://awslabs.github.io/mountpoint-s3-csi-driver
+helm upgrade --install aws-mountpoint-s3-csi-driver \
+    --namespace kube-system \
+    aws-mountpoint-s3-csi-driver/aws-mountpoint-s3-csi-driver
+echo "✅ AWS Mountpoint S3 CSI Driver installed"

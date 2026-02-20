@@ -1,3 +1,5 @@
 resources:
 - namespaces/namespaces.yaml
 - gateway/gateway.yaml
+- s3/csi.yaml
+- s3/seaweedfs.yaml
